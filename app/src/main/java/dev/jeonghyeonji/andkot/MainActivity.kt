@@ -2,14 +2,11 @@ package dev.jeonghyeonji.andkot
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.View
 import android.view.Menu
 import android.view.MenuItem
-import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 
 class MainActivity : AppCompatActivity() {
@@ -28,13 +25,24 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.fab_3) as FloatingActionButton
     }
 
-    internal val show_fab_1: Animation? = null
-    internal var hide_fab_1: Animation? = null
-    internal var show_fab_2: Animation? = null
-    internal var hide_fab_2: Animation? = null
-    internal var show_fab_3: Animation? = null
-    internal var hide_fab_3: Animation? = null
-
+    internal val show_fab_1 by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.fab1_show)
+    }
+    internal val hide_fab_1 by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.fab1_hide)
+    }
+    internal val show_fab_2 by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.fab2_show)
+    }
+    internal val hide_fab_2 by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.fab2_hide)
+    }
+    internal val show_fab_3 by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.fab3_show)
+    }
+    internal val hide_fab_3 by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.fab3_hide)
+    }
     private var FAB_Status = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,49 +103,54 @@ class MainActivity : AppCompatActivity() {
 
     private fun expandFAB() {
         //Floating Action Button 1
-        val layoutParams = fab1.getLayoutParams() as FrameLayout.LayoutParams
-        layoutParams.rightMargin += (fab1.getWidth() * 1.7) as Int
-        layoutParams.bottomMargin += (fab1.getHeight() * 0.25) as Int
-        fab1.setLayoutParams(layoutParams)
+        val layoutParams = fab1.layoutParams as FrameLayout.LayoutParams
+        layoutParams.rightMargin += (fab1.width * 1.7).toInt()
+        layoutParams.bottomMargin += (fab1.height * 0.25).toInt()
+        fab1.layoutParams = layoutParams
         fab1.startAnimation(show_fab_1)
-        fab1.setClickable(true)
+        fab1.isClickable = true
+
         //Floating Action Button 2
-        val layoutParams2 = fab2.getLayoutParams() as FrameLayout.LayoutParams
-        layoutParams2.rightMargin += (fab2.getWidth() * 1.5) as Int
-        layoutParams2.bottomMargin += (fab2.getHeight() * 1.5) as Int
-        fab2.setLayoutParams(layoutParams2)
+        val layoutParams2 = fab2.layoutParams as FrameLayout.LayoutParams
+        layoutParams2.rightMargin += (fab2.width * 1.5).toInt()
+        layoutParams2.bottomMargin += (fab2.height * 1.5).toInt()
+        fab2.layoutParams = layoutParams2
         fab2.startAnimation(show_fab_2)
-        fab2.setClickable(true)
+        fab2.isClickable = true
+
         //Floating Action Button 3
-        val layoutParams3 = fab3.getLayoutParams() as FrameLayout.LayoutParams
-        layoutParams3.rightMargin += (fab3.getWidth() * 0.25) as Int
-        layoutParams3.bottomMargin += (fab3.getHeight() * 1.7) as Int
-        fab3.setLayoutParams(layoutParams3)
+        val layoutParams3 = fab3.layoutParams as FrameLayout.LayoutParams
+        layoutParams3.rightMargin += (fab3.width * 0.25).toInt()
+        layoutParams3.bottomMargin += (fab3.height * 1.7).toInt()
+        fab3.layoutParams = layoutParams3
         fab3.startAnimation(show_fab_3)
-        fab3.setClickable(true)
+        fab3.isClickable = true
     }
 
     private fun hideFAB() {
         //Floating Action Button 1
-        val layoutParams = fab1.getLayoutParams() as FrameLayout.LayoutParams
-        layoutParams.rightMargin -= (fab1.getWidth() * 1.7) as Int
-        layoutParams.bottomMargin -= (fab1.getHeight() * 0.25) as Int
-        fab1.setLayoutParams(layoutParams)
+        val layoutParams = fab1.layoutParams as FrameLayout.LayoutParams
+        layoutParams.rightMargin -= (fab1.width * 1.7).toInt()
+        layoutParams.bottomMargin -= (fab1.height * 0.25).toInt()
+        fab1.layoutParams = layoutParams
         fab1.startAnimation(hide_fab_1)
-        fab1.setClickable(false)
+        fab1.isClickable = false
+
         //Floating Action Button 2
-        val layoutParams2 = fab2.getLayoutParams() as FrameLayout.LayoutParams
-        layoutParams2.rightMargin -= (fab2.getWidth() * 1.5) as Int
-        layoutParams2.bottomMargin -= (fab2.getHeight() * 1.5) as Int
-        fab2.setLayoutParams(layoutParams2)
+        val layoutParams2 = fab2.layoutParams as FrameLayout.LayoutParams
+        layoutParams2.rightMargin -= (fab2.width * 1.5).toInt()
+        layoutParams2.bottomMargin -= (fab2.height * 1.5).toInt()
+        fab2.layoutParams = layoutParams2
         fab2.startAnimation(hide_fab_2)
-        fab2.setClickable(false)
+        fab2.isClickable = false
+
         //Floating Action Button 3
-        val layoutParams3 = fab3.getLayoutParams() as FrameLayout.LayoutParams
-        layoutParams3.rightMargin -= (fab3.getWidth() * 0.25) as Int
-        layoutParams3.bottomMargin -= (fab3.getHeight() * 1.7) as Int
-        fab3.setLayoutParams(layoutParams3)
+        val layoutParams3 = fab3.layoutParams as FrameLayout.LayoutParams
+        layoutParams3.rightMargin -= (fab3.width * 0.25).toInt()
+        layoutParams3.bottomMargin -= (fab3.height * 1.7).toInt()
+        fab3.layoutParams = layoutParams3
         fab3.startAnimation(hide_fab_3)
-        fab3.setClickable(false)
+        fab3.isClickable = false
     }
 }
+
