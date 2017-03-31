@@ -11,7 +11,7 @@
         android:pivotY="50%"
         android:repeatCount="4"
         android:repeatMode="reverse"
-        android:toDegrees="0"></rotate>
+        android:toDegrees="0" />
 
     <!--Move-->
     <translate
@@ -20,13 +20,13 @@
         android:fromYDelta="25%"
         android:interpolator="@android:anim/linear_interpolator"
         android:toXDelta="0%"
-        android:toYDelta="0%"></translate>
+        android:toYDelta="0%" />
 
     <!--Fade In-->
     <alpha
         android:duration="2000"
         android:fromAlpha="0.0"
         android:interpolator="@android:anim/decelerate_interpolator"
-        android:toAlpha="1.0"></alpha>
+        android:toAlpha="1.0" />
 
 </set>

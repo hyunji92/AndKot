@@ -1,28 +1,28 @@
 package dev.jeonghyeonji.andkot
 
+import android.animation.Animator
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fab_layout.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() ,View.OnClickListener{
+    override fun onClick(v: View?) {
+        when(v) {
+            fab_1 -> Toast.makeText(applicationContext,"와아아앙", 1)
 
-    private val toolbar by lazy {
-        findViewById(R.id.toolbar) as Toolbar
-    }
+            fab_2 -> Toast.makeText(applicationContext,"와아아앙", 2)
 
-    val fab1 by lazy {
-        findViewById(R.id.fab_1) as FloatingActionButton
-    }
-    val fab2 by lazy {
-        findViewById(R.id.fab_2) as FloatingActionButton
-    }
-    val fab3 by lazy {
-        findViewById(R.id.fab_3) as FloatingActionButton
+            fab_3 -> Toast.makeText(applicationContext,"와아아앙", 3)
+        }
     }
 
     internal val show_fab_1 by lazy {
@@ -49,36 +49,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        val coordinatorLayout = findViewById(R.id.coordinatorLayout) as CoordinatorLayout
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener({
 
-            //Snackbar.make(it, "Replace with your own action", Snackbar.LENGTH_LONG)
-            //        .setAction("Action", null).show()
             if (FAB_Status == false) {
                 //Display FAB menu
-                expandFAB()
+                expand()
                 FAB_Status = true
             } else {
                 //Close FAB menu
-                hideFAB()
+                hide()
                 FAB_Status = false
             }
         })
 
-        val fab1 = findViewById(R.id.fab_1) as FloatingActionButton
-        fab1.setOnClickListener({
+        fab_1.setOnClickListener(this)
 
-        })
-        val fab2 = findViewById(R.id.fab_2) as FloatingActionButton
-        fab2.setOnClickListener({
+        fab_2.setOnClickListener(this)
 
-        })
-        val fab3 = findViewById(R.id.fab_3) as FloatingActionButton
-        fab3.setOnClickListener({
-
-        })
+        fab_3.setOnClickListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -100,57 +91,90 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun expand() {
+        fab_group.visibility = View.VISIBLE
+
+        val dY = (fab.height + fab.height * 0.25).toFloat()
+
+        fab_1.animate().translationY(-dY).start()
+        fab_2.animate().translationY(-dY * 2).start()
+        val animator = fab_3.animate().translationY(-dY * 3)
+        animator.setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+
+            // scale  만 가지고 해본다 . object animation
+
+            override fun onAnimationEnd(animation: Animator?) {
+                fab_group.visibility = if (FAB_Status) View.VISIBLE else View.INVISIBLE
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+
+            override fun onAnimationStart(animation: Animator?) {
+            }
+
+        })
+        animator.start()
+    }
+
+    private fun hide() {
+        fab_1.animate().translationY(0f).start()
+        fab_2.animate().translationY(0f).start()
+        fab_3.animate().translationY(0f).start()
+    }
+
 
     private fun expandFAB() {
         //Floating Action Button 1
-        val layoutParams = fab1.layoutParams as FrameLayout.LayoutParams
-        layoutParams.rightMargin += (fab1.width * 1.7).toInt()
-        layoutParams.bottomMargin += (fab1.height * 0.25).toInt()
-        fab1.layoutParams = layoutParams
-        fab1.startAnimation(show_fab_1)
-        fab1.isClickable = true
+        val layoutParams = fab_1.layoutParams as FrameLayout.LayoutParams
+        // layoutParams.rightMargin += (fab_1.width * 1.7).toInt()
+        layoutParams.bottomMargin += (fab_1.height * 0.25).toInt()
+        fab_1.layoutParams = layoutParams
+        fab_1.startAnimation(show_fab_1)
+        fab_1.isClickable = true
 
         //Floating Action Button 2
-        val layoutParams2 = fab2.layoutParams as FrameLayout.LayoutParams
-        layoutParams2.rightMargin += (fab2.width * 1.5).toInt()
-        layoutParams2.bottomMargin += (fab2.height * 1.5).toInt()
-        fab2.layoutParams = layoutParams2
-        fab2.startAnimation(show_fab_2)
-        fab2.isClickable = true
+        val layoutParams2 = fab_2.layoutParams as FrameLayout.LayoutParams
+        // layoutParams2.rightMargin += (fab_2.width * 1.5).toInt()
+        layoutParams2.bottomMargin += (fab_2.height * 1.5).toInt()
+        fab_2.layoutParams = layoutParams2
+        fab_2.startAnimation(show_fab_2)
+        fab_2.isClickable = true
 
         //Floating Action Button 3
-        val layoutParams3 = fab3.layoutParams as FrameLayout.LayoutParams
-        layoutParams3.rightMargin += (fab3.width * 0.25).toInt()
-        layoutParams3.bottomMargin += (fab3.height * 1.7).toInt()
-        fab3.layoutParams = layoutParams3
-        fab3.startAnimation(show_fab_3)
-        fab3.isClickable = true
+        val layoutParams3 = fab_3.layoutParams as FrameLayout.LayoutParams
+        // layoutParams3.rightMargin += (fab_3.width * 0.25).toInt()
+        layoutParams3.bottomMargin += (fab_3.height * 1.7).toInt()
+        fab_3.layoutParams = layoutParams3
+        fab_3.startAnimation(show_fab_3)
+        fab_3.isClickable = true
     }
 
     private fun hideFAB() {
         //Floating Action Button 1
-        val layoutParams = fab1.layoutParams as FrameLayout.LayoutParams
-        layoutParams.rightMargin -= (fab1.width * 1.7).toInt()
-        layoutParams.bottomMargin -= (fab1.height * 0.25).toInt()
-        fab1.layoutParams = layoutParams
-        fab1.startAnimation(hide_fab_1)
-        fab1.isClickable = false
+        val layoutParams = fab_1.layoutParams as FrameLayout.LayoutParams
+        // layoutParams.rightMargin -= (fab_1.width * 1.7).toInt()
+        layoutParams.bottomMargin -= (fab_1.height * 0.25).toInt()
+        fab_1.layoutParams = layoutParams
+        fab_1.startAnimation(hide_fab_1)
+        fab_1.isClickable = false
 
         //Floating Action Button 2
-        val layoutParams2 = fab2.layoutParams as FrameLayout.LayoutParams
-        layoutParams2.rightMargin -= (fab2.width * 1.5).toInt()
-        layoutParams2.bottomMargin -= (fab2.height * 1.5).toInt()
-        fab2.layoutParams = layoutParams2
-        fab2.startAnimation(hide_fab_2)
-        fab2.isClickable = false
+        val layoutParams2 = fab_2.layoutParams as FrameLayout.LayoutParams
+        // layoutParams2.rightMargin -= (fab_2.width * 1.5).toInt()
+        layoutParams2.bottomMargin -= (fab_2.height * 1.5).toInt()
+        fab_2.layoutParams = layoutParams2
+        fab_2.startAnimation(hide_fab_2)
+        fab_2.isClickable = false
 
         //Floating Action Button 3
-        val layoutParams3 = fab3.layoutParams as FrameLayout.LayoutParams
-        layoutParams3.rightMargin -= (fab3.width * 0.25).toInt()
-        layoutParams3.bottomMargin -= (fab3.height * 1.7).toInt()
-        fab3.layoutParams = layoutParams3
-        fab3.startAnimation(hide_fab_3)
-        fab3.isClickable = false
+        val layoutParams3 = fab_3.layoutParams as FrameLayout.LayoutParams
+        // layoutParams3.rightMargin -= (fab_3.width * 0.25).toInt()
+        layoutParams3.bottomMargin -= (fab_3.height * 1.7).toInt()
+        fab_3.layoutParams = layoutParams3
+        fab_3.startAnimation(hide_fab_3)
+        fab_3.isClickable = false
     }
 }
-
